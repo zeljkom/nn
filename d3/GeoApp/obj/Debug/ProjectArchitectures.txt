@@ -1,0 +1,2 @@
+c:\projects\temp\ZeljkoMikicDZ3\ZeljkoMikicDZ3\GeoApp\GeoApp.csproj;neutral
+c:\projects\temp\ZeljkoMikicDZ3\ZeljkoMikicDZ3\GeoBackgroundService\GeoBackgroundService.csproj;neutral
