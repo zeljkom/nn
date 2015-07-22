@@ -12,6 +12,9 @@
         <CommandBar>
             <AppBarButton x:ConnectionId='1' Name="ZoomIn" Icon="ZoomIn"                     />
             <AppBarButton x:ConnectionId='2' Name="ZoomOut" Icon="ZoomOut"                      />
+            <AppBarButton x:ConnectionId='3' Name="OpenProtocol" Icon="OpenFile"                            />
+            <AppBarButton x:ConnectionId='4' Name="GetDirections" Icon="Directions"                             />
+            
         </CommandBar>
     </Page.BottomAppBar>
 
@@ -27,6 +30,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <!-- Title Panel -->
@@ -37,6 +41,7 @@
         <!--TODO: Content should be placed within the following grid-->
 
             <Maps:MapControl x:Name="MyMap" Grid.Row="1" />
-        </Grid>
+        <TextBlock Grid.Row="2" Name="tbOutputText"/>
+    </Grid>
 </Page>
 

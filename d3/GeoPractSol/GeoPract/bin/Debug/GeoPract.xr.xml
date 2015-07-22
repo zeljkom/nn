@@ -34,6 +34,7 @@
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.Maps.MapControl" />
     <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
+      <RootProperty Name="Name" />
       <RootProperty Name="Text" />
       <RootProperty Name="Style" />
       <RootProperty Name="Margin" />

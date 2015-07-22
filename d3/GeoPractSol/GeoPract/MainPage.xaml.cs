@@ -21,6 +21,8 @@ using Windows.UI.Notifications;
 using Windows.Devices.Geolocation;
 using Windows.UI.Xaml.Controls.Maps;
 using Windows.UI;
+using Windows.Services.Maps;
+using Windows.UI.Xaml.Documents;
 // The Basic Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
 
 namespace GeoPract {
@@ -170,6 +172,73 @@ namespace GeoPract {
         private void ZoomOut_Click(object sender, RoutedEventArgs e) {
             if (MyMap.ZoomLevel > MyMap.MinZoomLevel)
                 MyMap.ZoomLevel -= 1;
+        }
+
+        private  async void OpenProtocol_Click(object sender, RoutedEventArgs e) {
+            string uriToLaunch = @"xyz://zeljkom";
+            var uri = new Uri(uriToLaunch);
+            var success = await Windows.System.Launcher.LaunchUriAsync(uri);
+            int i = 0;
+        }
+
+        private async void GetRouteAndDirections() {
+            // Start at Microsoft in Redmond, Washington.
+            BasicGeoposition startLocation = new BasicGeoposition();
+            startLocation.Latitude = 47.643;
+            startLocation.Longitude = -122.131;
+            Geopoint startPoint = new Geopoint(startLocation);
+
+            // End at the city of Seattle, Washington.
+            BasicGeoposition endLocation = new BasicGeoposition();
+            endLocation.Latitude = 47.604;
+            endLocation.Longitude = -122.329;
+            Geopoint endPoint = new Geopoint(endLocation);
+
+            // Get the route between the points.
+            MapRouteFinderResult routeResult =
+                await MapRouteFinder.GetDrivingRouteAsync(
+                startPoint,
+                endPoint,
+                MapRouteOptimization.Time,
+                MapRouteRestrictions.None);
+
+            if (routeResult.Status == MapRouteFinderStatus.Success) {
+                // Display summary info about the route.
+                tbOutputText.Inlines.Add(new Run() {
+                    Text = "Total estimated time (minutes) = "
+                        + routeResult.Route.EstimatedDuration.TotalMinutes.ToString()
+                });
+                tbOutputText.Inlines.Add(new LineBreak());
+                tbOutputText.Inlines.Add(new Run() {
+                    Text = "Total length (kilometers) = "
+                        + (routeResult.Route.LengthInMeters / 1000).ToString()
+                });
+                tbOutputText.Inlines.Add(new LineBreak());
+                tbOutputText.Inlines.Add(new LineBreak());
+
+                // Display the directions.
+                tbOutputText.Inlines.Add(new Run() {
+                    Text = "DIRECTIONS"
+                });
+                tbOutputText.Inlines.Add(new LineBreak());
+
+                foreach (MapRouteLeg leg in routeResult.Route.Legs) {
+                    foreach (MapRouteManeuver maneuver in leg.Maneuvers) {
+                        tbOutputText.Inlines.Add(new Run() {
+                            Text = maneuver.InstructionText
+                        });
+                        tbOutputText.Inlines.Add(new LineBreak());
+                    }
+                }
+            } else {
+                tbOutputText.Text =
+                    "A problem occurred: " + routeResult.Status.ToString();
+            }
+
+        }
+
+        private void GetDirections_Click(object sender, RoutedEventArgs e) {
+            GetRouteAndDirections();
         }
     }
 }

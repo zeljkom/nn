@@ -2,3 +2,5 @@ MapRouteFinder
 https://msdn.microsoft.com/en-us/library/windows/apps/xaml/dn631250.aspx
 Tiles, Badges, Notifications
 https://msdn.microsoft.com/en-us/library/windows/apps/hh779725.aspx
+Route & directions
+https://msdn.microsoft.com/en-us/library/windows/apps/xaml/hh779670.aspx
